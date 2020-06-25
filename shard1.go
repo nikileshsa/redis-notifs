@@ -5,15 +5,13 @@ import (
 	"crypto/tls"
 	"fmt"
 	"github.com/go-redis/redis/v8"
-	"time"
-	"strconv"
 )
 
 func main() {
 
-	client := redis.NewClusterClient(&redis.ClusterOptions{
-		Addrs:    []string{"clustercfg.awr1819fghzlemyw.coupte.usw2.cache.amazonaws.com:6379"},
-		Password: "Tpbys6pg!wwsrrfpviypakgvgcnjbbe#",
+	client := redis.NewClient(&redis.Options{
+		Addr:    "awrxipp5sxfb6qy-0001-001.awrxipp5sxfb6qy.gguve8.usw2.cache.amazonaws.com:6379",
+		Password: "ipmvwwb1kapi^r^z#tMja^w#ue^kf!ox",
 		TLSConfig: &tls.Config{
 			InsecureSkipVerify: true,
 		},
@@ -26,23 +24,15 @@ func main() {
 		fmt.Println("Redis ping failed", err)
 	}
 	fmt.Println(pong)
-        j := 100
-	for i := 0; i < j; i++ {
-		key := "nikkey"+strconv.Itoa(i)
-	err = client.Set(ctx, key, strconv.Itoa(i), time.Minute).Err()
-        if err != nil {
-	      panic(err)
-	}
-
-//	res, _ := client.ClusterInfo(ctx).Result()
-//	fmt.Println(res)
-	hashSlot, _ := client.ClusterKeySlot(ctx,key).Result()
-	fmt.Printf("Key %v is in slot %v \n" ,key, hashSlot)
+	res, _ := client.ClusterInfo(ctx).Result()
+	fmt.Println(res)
+	//hashSlot, _ := client.ClusterKeySlot(ctx,key).Result()
+	//fmt.Printf("Key %v is in slot %v" ,key, hashSlot)
 
      //  keys, err := client.ClusterGetKeysInSlot(hashtag.Slot("key"+strconv.Itoa(i)), 1).Result()
       // fmt.Println(keys)
 
-}
+
 
 
 subPattern := "__key*__:*"

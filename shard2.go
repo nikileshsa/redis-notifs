@@ -9,9 +9,9 @@ import (
 
 func main() {
 
-	client := redis.NewClusterClient(&redis.ClusterOptions{
-		Addrs:    []string{"awr1819fghzlemyw-0001-001.awr1819fghzlemyw.coupte.usw2.cache.amazonaws.com:6379"},
-		Password: "Tpbys6pg!wwsrrfpviypakgvgcnjbbe#",
+	client := redis.NewClient(&redis.Options{
+		Addr:    "awrxipp5sxfb6qy-0002-001.awrxipp5sxfb6qy.gguve8.usw2.cache.amazonaws.com:6379",
+		Password: "ipmvwwb1kapi^r^z#tMja^w#ue^kf!ox",
 		TLSConfig: &tls.Config{
 			InsecureSkipVerify: true,
 		},
@@ -26,11 +26,6 @@ func main() {
 	fmt.Println(pong)
 	res, _ := client.ClusterInfo(ctx).Result()
 	fmt.Println(res)
-	//hashSlot, _ := client.ClusterKeySlot(ctx,key).Result()
-	//fmt.Printf("Key %v is in slot %v" ,key, hashSlot)
-
-     //  keys, err := client.ClusterGetKeysInSlot(hashtag.Slot("key"+strconv.Itoa(i)), 1).Result()
-      // fmt.Println(keys)
 
 
 
@@ -39,9 +34,8 @@ subPattern := "__key*__:*"
 sub := client.PSubscribe(ctx,subPattern)
 fmt.Println("watching %v", subPattern)
 
-ctx1 := context.TODO()
 for {
-  msg, err := sub.Receive(ctx1)
+  msg, err := sub.Receive(ctx)
   if err != nil {
     fmt.Println(err)
     continue
